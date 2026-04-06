@@ -16,3 +16,6 @@ dev-dist
 
 # Superpowers brainstorm
 .superpowers/
+
+# Claude Code local settings
+.claude/
