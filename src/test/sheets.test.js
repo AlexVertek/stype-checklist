@@ -75,6 +75,20 @@ describe('normalizeItem', () => {
     const raw = { pre_light_id: 'x', etapa: 'T', ordem: '5', acao: 'A', observacao: '', tutorial: '' }
     expect(normalizeItem(raw, 'pre_light').ordem).toBe(5)
   })
+
+  it('for pos_producao: obs takes priority over observacao when both present', () => {
+    const raw = {
+      pos_producao_id: 'aab',
+      etapa: 'Render',
+      ordem: '2',
+      acao: 'Export',
+      obs: 'from obs field',
+      observacao: 'from observacao field',
+      tutorial: '',
+    }
+    const result = normalizeItem(raw, 'pos_producao')
+    expect(result.observacao).toBe('from obs field')
+  })
 })
 
 describe('SHEET_GIDS', () => {

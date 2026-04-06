@@ -53,6 +53,7 @@ function splitCSVLine(line) {
  * @param {Object} raw - Row from parseCSV
  * @param {'pre_light'|'gravacao'|'pos_producao'} fase
  * @returns {{ id, fase, etapa, ordem, acao, observacao, tutorial }}
+ * Note: missing/non-numeric ordem defaults to 0 (sorted first)
  */
 export function normalizeItem(raw, fase) {
   const idKey = fase === 'pre_light'
@@ -67,7 +68,9 @@ export function normalizeItem(raw, fase) {
     etapa: raw.etapa || '',
     ordem: parseInt(raw.ordem, 10) || 0,
     acao: raw.acao || '',
-    observacao: raw.observacao || raw.obs || '',
+    observacao: fase === 'pos_producao'
+      ? (raw.obs || raw.observacao || '')
+      : (raw.observacao || raw.obs || ''),
     tutorial: raw.tutorial || '',
   }
 }
